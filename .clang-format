@@ -1,0 +1,8 @@
+Language: Cpp
+BasedOnStyle: LLVM
+Standard: c++20
+PointerAlignment: Left
+ReferenceAlignment: Left
+AlignConsecutiveMacros: true
+SortIncludes: false
+AlwaysBreakTemplateDeclarations: true
