@@ -16,21 +16,43 @@
 
 #ifndef BLIND_ASSIST_CALCULATE_ANGLES_H
 #define BLIND_ASSIST_CALCULATE_ANGLES_H
+#include <utility>
+
 #include "detect.h"
 
-void get_rvecs_and_tvecs(std::vector<cv::Vec3d>& rvecs,
-                         std::vector<cv::Vec3d>& tvecs,
-                         const std::vector<std::vector<cv::Point2f>>& corners,
-                         float marker_len,
-                         const Eigen::Matrix3f& intrinsic_matrix,
-                         const Eigen::Vector<float, 5>& dist_coef);
-void get_ypr_and_translation(Eigen::Vector3f& ypr,
-                             Eigen::Vector3f& trans_cam2world,
-                             const std::vector<cv::Vec3d>& rvecs,
-                             const std::vector<cv::Vec3d>& tvecs, int id);
-void process(const std::string& img_path,
-             IntelRealsenseIntrinsics640_480& intrinsic,
-             const Eigen::Vector<float, 5>& dist,
-             bool is_visualize= false);
+namespace aruconavi {
+  class Calc {
+  public:
+    IntelRealsenseIntrinsics640_480 intrinsic_;
+    Eigen::Vector3f ypr, trans_cam2world;
+    Eigen::Matrix3f camera_matrix_;
+    Eigen::Vector<float, 5> dist_coef_;
+    std::vector<cv::Vec3d> rvecs_, tvecs_;
+    cv::Vec3d rvec_, tvec_;
 
+  public:
+    Calc(IntelRealsenseIntrinsics640_480 intrinsic, Eigen::Vector<float, 5> dist_coef) {
+      camera_matrix_ = build_intrinsic(intrinsic);
+      dist_coef_ = std::move(dist_coef);
+      intrinsic_ = intrinsic;
+    }
+
+    void process(cv::Mat& image);
+
+    ~Calc() = default;
+
+  private:
+    void
+    get_rvecs_and_tvecs(const std::vector<std::vector<cv::Point2f>>& corners,
+                        float marker_len);
+    void get_ypr_and_translation(int id);
+
+
+  };
+
+  void draw_coordinate_system(cv::Mat& image,
+                              const Eigen::Matrix3f& intrinsic_matrix,
+                              const Eigen::Vector<float, 5>& dist_coef,
+                              const cv::Vec3d& rvec, const cv::Vec3d& tvec);
+} // namespace aruconavi
 #endif // BLIND_ASSIST_CALCULATE_ANGLES_H

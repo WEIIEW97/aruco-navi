@@ -4,5 +4,9 @@ Standard: c++20
 PointerAlignment: Left
 ReferenceAlignment: Left
 AlignConsecutiveMacros: true
-SortIncludes: false
-AlwaysBreakTemplateDeclarations: true
+SortIncludes: Never
+AlwaysBreakTemplateDeclarations:  Yes
+NamespaceIndentation: All
+BraceWrapping:
+  AfterNamespace: true
+FixNamespaceComments: true

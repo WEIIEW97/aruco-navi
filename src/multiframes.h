@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2023, William Wei. All rights reserved.
+ * Copyright (c) 2023--present, WILLIAM WEI.  All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-#ifndef BLIND_ASSIST_MATHUTIL_H
-#define BLIND_ASSIST_MATHUTIL_H
-#include <Eigen/Dense>
-#include <cmath>
+#ifndef BLIND_ASSIST_MULTIFRAMES_H
+#define BLIND_ASSIST_MULTIFRAMES_H
 
-namespace aruconavi {
-  Eigen::Vector3f R2ypr(const Eigen::Matrix3f& R);
-}
-#endif // BLIND_ASSIST_MATHUTIL_H
+#include "calculate_angles.h"
+
+#endif // BLIND_ASSIST_MULTIFRAMES_H

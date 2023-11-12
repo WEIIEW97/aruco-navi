@@ -17,17 +17,23 @@
 #ifndef BLIND_ASSIST_CONSTANT_H
 #define BLIND_ASSIST_CONSTANT_H
 #include <Eigen/Dense>
+#include <opencv2/aruco/dictionary.hpp>
 
-struct IntelRealsenseIntrinsics640_480 {
-  float fx = 610.117;
-  float fy = 608.71;
-  float cx = 316.156;
-  float cy = 249.345;
-};
+namespace aruconavi {
+  struct IntelRealsenseIntrinsics640_480 {
+    float fx = 610.117;
+    float fy = 608.71;
+    float cx = 316.156;
+    float cy = 249.345;
+  };
 
-static IntelRealsenseIntrinsics640_480 intrinsics640480;
+  static IntelRealsenseIntrinsics640_480 intrinsics640480;
 
-static Eigen::Vector<float, 5> distortion = {0, 0, 0, 0, 0};
+  static Eigen::Vector<float, 5> distortion = {0, 0, 0, 0, 0};
 
-const cv::aruco::PREDEFINED_DICTIONARY_NAME ArucoDict = cv::aruco::DICT_6X6_250;
+  const cv::aruco::PREDEFINED_DICTIONARY_NAME ArucoDict =
+      cv::aruco::DICT_6X6_250;
+
+  const float MarkerLen = 0.176;
+} // namespace aruconavi
 #endif // BLIND_ASSIST_CONSTANT_H

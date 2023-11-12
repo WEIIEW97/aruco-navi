@@ -24,13 +24,16 @@
 #include "mathutil.h"
 #include "constant.h"
 
-std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
-detect_markers(cv::Mat& image,
-               cv::aruco::PREDEFINED_DICTIONARY_NAME aruco_dict_info);
-std::vector<cv::Point2f> find_min_id_corners(
-    const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
-        pairs);
-int find_min_id(const std::pair<std::vector<int>,
-                                std::vector<std::vector<cv::Point2f>>>& pairs);
-Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params);
+namespace aruconavi {
+  std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
+  detect_markers(cv::Mat& image,
+                 cv::aruco::PREDEFINED_DICTIONARY_NAME aruco_dict_info);
+  std::vector<cv::Point2f> find_min_id_corners(
+      const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
+          pairs);
+  int find_min_id(
+      const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
+          pairs);
+  Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params);
+} // namespace aruconavi
 #endif // BLIND_ASSIST_DETECT_H

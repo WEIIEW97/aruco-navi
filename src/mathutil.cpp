@@ -15,19 +15,21 @@
  */
 #include "mathutil.h"
 
-Eigen::Vector3f R2ypr(const Eigen::Matrix3f& R) {
-  Eigen::Vector3f n = R.col(0);
-  Eigen::Vector3f o = R.col(1);
-  Eigen::Vector3f a = R.col(2);
+namespace aruconavi {
+  Eigen::Vector3f R2ypr(const Eigen::Matrix3f& R) {
+    Eigen::Vector3f n = R.col(0);
+    Eigen::Vector3f o = R.col(1);
+    Eigen::Vector3f a = R.col(2);
 
-  Eigen::Vector3f ypr(3);
-  double y = atan2(n(1), n(0));
-  double p = atan2(-n(2), n(0) * cos(y) + n(1) * sin(y));
-  double r =
-      atan2(a(0) * sin(y) - a(1) * cos(y), -o(0) * sin(y) + o(1) * cos(y));
-  ypr(0) = y;
-  ypr(1) = p;
-  ypr(2) = r;
+    Eigen::Vector3f ypr(3);
+    double y = atan2(n(1), n(0));
+    double p = atan2(-n(2), n(0) * cos(y) + n(1) * sin(y));
+    double r =
+        atan2(a(0) * sin(y) - a(1) * cos(y), -o(0) * sin(y) + o(1) * cos(y));
+    ypr(0) = y;
+    ypr(1) = p;
+    ypr(2) = r;
 
-  return ypr / M_PI * 180.0;
-}
+    return ypr / M_PI * 180.0;
+  }
+} // namespace aruconavi

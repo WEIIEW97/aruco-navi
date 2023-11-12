@@ -14,66 +14,69 @@
  * limitations under the License.
  */
 #include "detect.h"
-#include <limits>
+#include <climits>
 
-std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
-detect_markers(cv::Mat& image,
-               cv::aruco::PREDEFINED_DICTIONARY_NAME aruco_dict_info) {
-  cv::Mat gray;
-  cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
-  auto aruco_info = cv::aruco::getPredefinedDictionary(aruco_dict_info);
+namespace aruconavi {
+  std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
+  detect_markers(cv::Mat& image,
+                 cv::aruco::PREDEFINED_DICTIONARY_NAME aruco_dict_info) {
+    cv::Mat gray;
+    cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
+    auto aruco_info = cv::aruco::getPredefinedDictionary(aruco_dict_info);
 
-  std::vector<int> ids;
-  std::vector<std::vector<cv::Point2f>> corners;
+    std::vector<int> ids;
+    std::vector<std::vector<cv::Point2f>> corners;
 
-  cv::aruco::detectMarkers(gray, aruco_info, corners, ids);
-  return std::make_pair(ids, corners);
-}
+    cv::aruco::detectMarkers(gray, aruco_info, corners, ids);
+    return std::make_pair(ids, corners);
+  }
 
-std::vector<cv::Point2f> find_min_id_corners(
-    const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
-        pairs) {
-  int min_id = INT_MAX;
-  int min_index = -1;
+  std::vector<cv::Point2f> find_min_id_corners(
+      const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
+          pairs) {
+    int min_id = INT_MAX;
+    int min_index = -1;
 
-  const auto& ids = pairs.first;
-  const auto& corners = pairs.second;
+    const auto& ids = pairs.first;
+    const auto& corners = pairs.second;
 
-  for (int i = 0; i < ids.size(); ++i) {
-    if (ids[i] < min_id) {
-      min_id = ids[i];
-      min_index = i;
+    for (int i = 0; i < ids.size(); ++i) {
+      if (ids[i] < min_id) {
+        min_id = ids[i];
+        min_index = i;
+      }
     }
-  }
 
-  if (min_index == -1) {
-    return {}; // Return empty if no IDs are found
-  }
-
-  return corners[min_index];
-}
-
-int find_min_id(const std::pair<std::vector<int>,
-                                std::vector<std::vector<cv::Point2f>>>& pairs) {
-  int min_id = INT_MAX;
-  int min_index = -1;
-
-  const auto& ids = pairs.first;
-  const auto& corners = pairs.second;
-
-  for (int i = 0; i < ids.size(); ++i) {
-    if (ids[i] < min_id) {
-      min_id = ids[i];
-      min_index = i;
+    if (min_index == -1) {
+      return {}; // Return empty if no IDs are found
     }
+
+    return corners[min_index];
   }
 
-  return min_index;
-}
+  int find_min_id(
+      const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
+          pairs) {
+    int min_id = INT_MAX;
+    int min_index = -1;
 
-Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params) {
-  Eigen::Matrix3f intrinsic;
-  intrinsic << params.fx, 0.f, params.cx, 0.f, params.fy, params.cy, 0.f, 0.f,
-      1;
-  return intrinsic;
-}
+    const auto& ids = pairs.first;
+    const auto& corners = pairs.second;
+
+    for (int i = 0; i < ids.size(); ++i) {
+      if (ids[i] < min_id) {
+        min_id = ids[i];
+        min_index = i;
+      }
+    }
+
+    return min_index;
+  }
+
+  Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params) {
+    Eigen::Matrix3f intrinsic;
+    intrinsic << params.fx, 0.f, params.cx, 0.f, params.fy, params.cy, 0.f, 0.f,
+        1;
+    return intrinsic;
+  }
+} // namespace aruconavi
