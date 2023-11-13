@@ -19,5 +19,7 @@
 
 #include <librealsense2/rs.hpp>
 #include <opencv2/opencv.hpp>
-
+namespace aruconavi {
+  bool rs_with_cv_capture(int win_width, int win_height);
+}
 #endif // BLIND_ASSIST_MULTIFRAMES_H

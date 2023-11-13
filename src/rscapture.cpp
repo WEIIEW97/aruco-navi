@@ -16,30 +16,33 @@
 #include "rscapture.h"
 #include "realsenssutil.h"
 
-bool realsense_capture(int window_width, int window_height) {
-  try {
-    rs2::log_to_console(RS2_LOG_SEVERITY_ERROR);
-    window app(1280, 720, "realsense capture example");
+namespace aruconavi {
+  bool rs_capture(int window_width, int window_height) {
+    try {
+      rs2::log_to_console(RS2_LOG_SEVERITY_ERROR);
+      window app(1280, 720, "realsense capture example");
 
-    rs2::colorizer color_map;
-    rs2::rates_printer printer;
+      rs2::colorizer color_map;
+      rs2::rates_printer printer;
 
-    rs2::pipeline pipe;
+      rs2::pipeline pipe;
 
-    pipe.start();
+      pipe.start();
 
-    while (app) {
-      rs2::frameset data =
-          pipe.wait_for_frames().apply_filter(printer).apply_filter(color_map);
-      app.show(data);
+      while (app) {
+        rs2::frameset data =
+            pipe.wait_for_frames().apply_filter(printer).apply_filter(
+                color_map);
+        app.show(data);
+      }
+      return true;
+    } catch (const rs2::error& e) {
+      std::cerr << "RealSense error calling " << e.get_failed_function() << "("
+                << e.get_failed_args() << "):\n    " << e.what() << std::endl;
+      return false;
+    } catch (const std::exception& e) {
+      std::cerr << e.what() << std::endl;
+      return false;
     }
-    return true;
-  } catch (const rs2::error& e) {
-    std::cerr << "RealSense error calling " << e.get_failed_function() << "("
-              << e.get_failed_args() << "):\n    " << e.what() << std::endl;
-    return false;
-  } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
-    return false;
   }
 }

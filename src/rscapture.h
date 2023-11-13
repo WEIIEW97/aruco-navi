@@ -18,5 +18,7 @@
 #define BLIND_ASSIST_RSCAPTURE_H
 
 #include <librealsense2/rs.hpp>
-bool realsense_capture(int window_width, int window_height);
+namespace aruconavi {
+  bool rs_capture(int window_width, int window_height);
+}
 #endif // BLIND_ASSIST_RSCAPTURE_H

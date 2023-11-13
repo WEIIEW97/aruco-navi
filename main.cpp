@@ -1,5 +1,6 @@
 #include "src/calculate_angles.h"
 #include "src/rscapture.h"
+#include "src/rscvcapture.h"
 #include <filesystem>
 #include <vector>
 using namespace aruconavi;
@@ -31,7 +32,8 @@ int main() {
 //  cv::imshow("detected coordinate system", image_copy);
 //  cv::waitKey(0);
 //  cv::destroyAllWindows();
-  bool status = realsense_capture(1280, 720);
+  bool status = rs_with_cv_capture(1280, 720);
+//  bool status = realsense_capture(1280, 720);
   if (status) {
     cout << "launch succeed!" << endl;
   } else {

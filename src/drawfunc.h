@@ -38,7 +38,7 @@ namespace aruconavi {
     void draw_detected_markers(
         std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
             pairs);
-    void draw_text();
+    //    void draw_text();
     ~Painter() = default;
   };
 } // namespace aruconavi
