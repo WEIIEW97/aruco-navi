@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023--present, WILLIAM WEI.  All rights reserved.
+ * Copyright (c) 2022-2023, William Wei. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,3 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+#ifndef BLIND_ASSIST_RSCAPTURE_H
+#define BLIND_ASSIST_RSCAPTURE_H
+
+#include <librealsense2/rs.hpp>
+bool realsense_capture(int window_width, int window_height);
+#endif // BLIND_ASSIST_RSCAPTURE_H

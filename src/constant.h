@@ -27,9 +27,9 @@ namespace aruconavi {
     float cy = 249.345;
   };
 
-  static IntelRealsenseIntrinsics640_480 intrinsics640480;
+  static IntelRealsenseIntrinsics640_480 INTRINSICS640480;
 
-  static Eigen::Vector<float, 5> distortion = {0, 0, 0, 0, 0};
+  static Eigen::Vector<float, 5> DISTORTION = {0, 0, 0, 0, 0};
 
   const cv::aruco::PREDEFINED_DICTIONARY_NAME ArucoDict =
       cv::aruco::DICT_6X6_250;

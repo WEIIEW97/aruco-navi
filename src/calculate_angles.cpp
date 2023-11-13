@@ -18,17 +18,6 @@
 #include <iostream>
 
 namespace aruconavi {
-  void draw_coordinate_system(cv::Mat& image,
-                              const Eigen::Matrix3f& intrinsic_matrix,
-                              const Eigen::Vector<float, 5>& dist_coef,
-                              const cv::Vec3d& rvec, const cv::Vec3d& tvec) {
-    cv::Mat intrinsic_matrix_cv, dist_coef_cv;
-    cv::eigen2cv(intrinsic_matrix, intrinsic_matrix_cv);
-    cv::eigen2cv(dist_coef, dist_coef_cv);
-    cv::drawFrameAxes(image, intrinsic_matrix_cv, dist_coef_cv, rvec, tvec,
-                      0.1);
-  }
-
   void Calc::get_rvecs_and_tvecs(
       const std::vector<std::vector<cv::Point2f>>& corners, float marker_len) {
     cv::Mat intrinsic_matrix_cv, dist_coef_cv;
@@ -59,9 +48,16 @@ namespace aruconavi {
   void Calc::process(cv::Mat& image) {
     std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>> pairs;
     pairs = detect_markers(image, ArucoDict);
-
+    pairs_ = pairs;
     int chosen_id = find_min_id(pairs);
-    this->get_rvecs_and_tvecs(pairs.second, MarkerLen);
-    this->get_ypr_and_translation(chosen_id);
+    if (chosen_id >= 0) {
+      this->get_rvecs_and_tvecs(pairs.second, MarkerLen);
+      this->get_ypr_and_translation(chosen_id);
+      draw_ready_ = true;
+    } else {
+      trans_cam2world = {0, 0, 0};
+      ypr = {0, 0, 0};
+      draw_ready_ = false;
+    }
   }
 } // namespace aruconavi

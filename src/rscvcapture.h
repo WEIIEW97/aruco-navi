@@ -17,6 +17,7 @@
 #ifndef BLIND_ASSIST_MULTIFRAMES_H
 #define BLIND_ASSIST_MULTIFRAMES_H
 
-#include "calculate_angles.h"
+#include <librealsense2/rs.hpp>
+#include <opencv2/opencv.hpp>
 
 #endif // BLIND_ASSIST_MULTIFRAMES_H

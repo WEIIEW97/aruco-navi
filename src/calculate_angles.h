@@ -29,9 +29,12 @@ namespace aruconavi {
     Eigen::Vector<float, 5> dist_coef_;
     std::vector<cv::Vec3d> rvecs_, tvecs_;
     cv::Vec3d rvec_, tvec_;
+    bool draw_ready_;
+    std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>> pairs_;
 
   public:
-    Calc(IntelRealsenseIntrinsics640_480 intrinsic, Eigen::Vector<float, 5> dist_coef) {
+    Calc(IntelRealsenseIntrinsics640_480 intrinsic,
+         Eigen::Vector<float, 5> dist_coef) {
       camera_matrix_ = build_intrinsic(intrinsic);
       dist_coef_ = std::move(dist_coef);
       intrinsic_ = intrinsic;
@@ -46,13 +49,7 @@ namespace aruconavi {
     get_rvecs_and_tvecs(const std::vector<std::vector<cv::Point2f>>& corners,
                         float marker_len);
     void get_ypr_and_translation(int id);
-
-
   };
 
-  void draw_coordinate_system(cv::Mat& image,
-                              const Eigen::Matrix3f& intrinsic_matrix,
-                              const Eigen::Vector<float, 5>& dist_coef,
-                              const cv::Vec3d& rvec, const cv::Vec3d& tvec);
 } // namespace aruconavi
 #endif // BLIND_ASSIST_CALCULATE_ANGLES_H
