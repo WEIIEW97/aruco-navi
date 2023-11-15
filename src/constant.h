@@ -17,8 +17,11 @@
 #ifndef BLIND_ASSIST_CONSTANT_H
 #define BLIND_ASSIST_CONSTANT_H
 #include <Eigen/Dense>
+#if defined(_WIN32) || defined(_WIN64)
+#include <opencv2/objdetect/aruco_dictionary.hpp>
+#else
 #include <opencv2/aruco/dictionary.hpp>
-
+#endif
 namespace aruconavi {
   struct IntelRealsenseIntrinsics640_480 {
     float fx = 610.117;
@@ -31,9 +34,12 @@ namespace aruconavi {
 
   static Eigen::Vector<float, 5> DISTORTION = {0, 0, 0, 0, 0};
 
+#if defined(_WIN32) || defined(_WIN64)
+  const cv::aruco::PredefinedDictionaryType ArucoDict = cv::aruco::DICT_6X6_250;
+#else
   const cv::aruco::PREDEFINED_DICTIONARY_NAME ArucoDict =
       cv::aruco::DICT_6X6_250;
-
+#endif
   const float MarkerLen = 0.176;
 } // namespace aruconavi
 #endif // BLIND_ASSIST_CONSTANT_H

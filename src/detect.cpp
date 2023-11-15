@@ -19,15 +19,24 @@
 namespace aruconavi {
   std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
   detect_markers(cv::Mat& image,
-                 cv::aruco::PREDEFINED_DICTIONARY_NAME aruco_dict_info) {
+                 cv::aruco::PredefinedDictionaryType aruco_dict_info) {
     cv::Mat gray;
     cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
+#if defined(_WIN32) || defined(_WIN64)
     auto aruco_info = cv::aruco::getPredefinedDictionary(aruco_dict_info);
-
+    cv::Ptr<cv::aruco::Dictionary> aruco_info_ptr =
+        cv::makePtr<cv::aruco::Dictionary>(aruco_info);
+#else
+    auto aruco_info = cv::aruco::getPredefinedDictionary(aruco_dict_info);
+#endif
     std::vector<int> ids;
     std::vector<std::vector<cv::Point2f>> corners;
 
+#if defined(_WIN32) || defined(_WIN64)
+    cv::aruco::detectMarkers(gray, aruco_info_ptr, corners, ids);
+#else
     cv::aruco::detectMarkers(gray, aruco_info, corners, ids);
+#endif
     return std::make_pair(ids, corners);
   }
 
@@ -92,12 +101,13 @@ namespace aruconavi {
     return intrinsic;
   }
 
-  std::vector<cv::Point2f> aruco_center_localization(const std::vector<std::vector<cv::Point2f>>& corners) {
+  std::vector<cv::Point2f> aruco_center_localization(
+      const std::vector<std::vector<cv::Point2f>>& corners) {
     std::vector<cv::Point2f> center_points(corners.size());
 
-    for(const auto& corner : corners) {
-      float x=0, y=0;
-      for(const auto& point : corner) {
+    for (const auto& corner : corners) {
+      float x = 0, y = 0;
+      for (const auto& point : corner) {
         x += point.x;
         y += point.y;
       }

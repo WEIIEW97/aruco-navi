@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#if defined(_WIN32) || defined(_WIN64)
+#define _USE_MATH_DEFINES
+#endif
 #include "mathutil.h"
 
 namespace aruconavi {
