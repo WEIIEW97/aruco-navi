@@ -91,4 +91,21 @@ namespace aruconavi {
         1;
     return intrinsic;
   }
+
+  std::vector<cv::Point2f> aruco_center_localization(const std::vector<std::vector<cv::Point2f>>& corners) {
+    std::vector<cv::Point2f> center_points(corners.size());
+
+    for(const auto& corner : corners) {
+      float x=0, y=0;
+      for(const auto& point : corner) {
+        x += point.x;
+        y += point.y;
+      }
+      auto n = corner.size();
+      x /= n;
+      y /= n;
+      center_points.emplace_back(x, y);
+    }
+    return center_points;
+  }
 } // namespace aruconavi

@@ -41,12 +41,34 @@ int main() {
 //  cv::imshow("detected coordinate system", image_copy);
 //  cv::waitKey(0);
 //  cv::destroyAllWindows();
-  bool status = rs_with_cv_capture(1280, 720);
+//  bool status = rs_with_cv_capture(1280, 720);
 //  bool status = rs_capture(1280, 720);
-  if (status) {
-    cout << "launch succeed!" << endl;
-  } else {
-    cout << "launch failed!" << endl;
+//  if (status) {
+//    cout << "launch succeed!" << endl;
+//  } else {
+//    cout << "launch failed!" << endl;
+//  }
+  cv::Point2f p1, p2, p3, p4;
+  p1 = {242, 434};
+  p2 = {0, 336};
+  p3 = {166, 172};
+  p4 = {335, 430};
+
+  std::vector<cv::Point2f> corner;
+  corner.push_back(p1);
+  corner.push_back(p2);
+  corner.push_back(p3);
+  corner.push_back(p4);
+
+  float x=0, y=0;
+  for (const auto& point : corner) {
+    x+=point.x;
+    y+=point.y;
   }
+  if (!corner.empty()) {
+    x /= corner.size();
+    y /= corner.size();
+  }
+  cout << "x: " << x << " y: " << y << endl;
   return 0;
 }

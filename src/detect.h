@@ -36,5 +36,6 @@ namespace aruconavi {
           pairs);
   int detect_left_right_departure(int id);
   Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params);
+  std::vector<cv::Point2f> aruco_center_localization(const std::vector<std::vector<cv::Point2f>>& corners);
 } // namespace aruconavi
 #endif // BLIND_ASSIST_DETECT_H
