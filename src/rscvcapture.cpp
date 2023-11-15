@@ -47,6 +47,7 @@ namespace aruconavi {
           painter.draw_coordinate_system(calculator.camera_matrix_,
                                          calculator.dist_coef_,
                                          calculator.rvec_, calculator.tvec_);
+          painter.print_message(calculator.ypr, calculator.trans_cam2world);
         }
         imshow(win_name, image_out);
       }

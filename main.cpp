@@ -6,6 +6,15 @@
 using namespace aruconavi;
 namespace fs = std::filesystem;
 using namespace std;
+
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+
 int main() {
 //  string img_dir = "/Users/williamwei/Codes/aruco-navi/aruco_capture";
 //  vector<string> img_names;
@@ -33,7 +42,7 @@ int main() {
 //  cv::waitKey(0);
 //  cv::destroyAllWindows();
   bool status = rs_with_cv_capture(1280, 720);
-//  bool status = realsense_capture(1280, 720);
+//  bool status = rs_capture(1280, 720);
   if (status) {
     cout << "launch succeed!" << endl;
   } else {

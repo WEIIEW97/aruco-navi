@@ -73,6 +73,18 @@ namespace aruconavi {
     return min_index;
   }
 
+  int detect_left_right_departure(int id) {
+    // if id % 10 == 3 which means it turns into left
+    // where id % 10 == 4 means it turns into right
+    if (id % 10 == 3) {
+      return 3;
+    } else if (id % 10 == 4) {
+      return 4;
+    } else {
+      return 0;
+    }
+  }
+
   Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params) {
     Eigen::Matrix3f intrinsic;
     intrinsic << params.fx, 0.f, params.cx, 0.f, params.fy, params.cy, 0.f, 0.f,

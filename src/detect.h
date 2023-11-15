@@ -34,6 +34,7 @@ namespace aruconavi {
   int find_min_id(
       const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
           pairs);
+  int detect_left_right_departure(int id);
   Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params);
 } // namespace aruconavi
 #endif // BLIND_ASSIST_DETECT_H

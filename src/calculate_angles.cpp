@@ -17,6 +17,14 @@
 #include <opencv2/core/eigen.hpp>
 #include <iostream>
 
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+
 namespace aruconavi {
   void Calc::get_rvecs_and_tvecs(
       const std::vector<std::vector<cv::Point2f>>& corners, float marker_len) {
@@ -53,11 +61,23 @@ namespace aruconavi {
     if (chosen_id >= 0) {
       this->get_rvecs_and_tvecs(pairs.second, MarkerLen);
       this->get_ypr_and_translation(chosen_id);
+      this->left_right_depature_warning(chosen_id);
       draw_ready_ = true;
     } else {
       trans_cam2world = {0, 0, 0};
       ypr = {0, 0, 0};
       draw_ready_ = false;
+    }
+  }
+
+  void Calc::left_right_depature_warning(int id) {
+    int status = -1;
+    status = detect_left_right_departure(id);
+    if (status == 3) {
+      std::cout << RED << "WARNING: " << "you are left drifted, please make a right turn!" << std::endl;
+    }
+    if (status == 4) {
+      std::cout << RED << "WARNING: " << "you are right drifted, please make a left turn!" << std::endl;
     }
   }
 } // namespace aruconavi

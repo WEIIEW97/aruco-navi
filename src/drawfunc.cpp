@@ -31,13 +31,25 @@ namespace aruconavi {
   }
 
   void Painter::draw_detected_markers(
-      std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
+      const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
           pairs) {
     std::vector<int> marked_ids = pairs.first;
     std::vector<std::vector<cv::Point2f>> marked_corners = pairs.second;
-    if (marked_ids.size() > 0) {
+    if (!marked_ids.empty()) {
       cv::aruco::drawDetectedMarkers(image_, marked_corners, marked_ids);
     }
+  }
+
+  void Painter::print_message(const Eigen::Vector3f& ypr, const Eigen::Vector3f& translation) {
+    std::cout << "rotation angles are: " << "\n" <<
+        "yaw: " << ypr(0) << "\n" <<
+        "pitch: " << ypr(1) << "\n" <<
+        "roll: " << ypr(2) << std::endl;
+    std::cout << "translation offset is(in meters): " << "\n" <<
+        "x axis: " << translation(0) << "\n" <<
+        "y axis: " << translation(1) << "\n" <<
+        "z axis: " << translation(2) << std::endl;
+    std::cout << "===============================" << std::endl;
   }
 
 } // namespace aruconavi

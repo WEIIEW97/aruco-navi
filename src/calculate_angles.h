@@ -49,6 +49,7 @@ namespace aruconavi {
     get_rvecs_and_tvecs(const std::vector<std::vector<cv::Point2f>>& corners,
                         float marker_len);
     void get_ypr_and_translation(int id);
+    void left_right_depature_warning(int id);
   };
 
 } // namespace aruconavi
