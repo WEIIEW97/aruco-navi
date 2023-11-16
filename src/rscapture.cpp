@@ -45,4 +45,4 @@ namespace aruconavi {
       return false;
     }
   }
-}
+} // namespace aruconavi

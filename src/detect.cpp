@@ -18,8 +18,13 @@
 
 namespace aruconavi {
   std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
+#if defined(_WIN32) || defined(_WIN64)
   detect_markers(cv::Mat& image,
                  cv::aruco::PredefinedDictionaryType aruco_dict_info) {
+#else
+  detect_markers(cv::Mat& image,
+                 cv::aruco::PREDEFINED_DICTIONARY_NAME aruco_dict_info) {
+#endif
     cv::Mat gray;
     cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
 #if defined(_WIN32) || defined(_WIN64)

@@ -3,6 +3,7 @@
 #include "src/rscvcapture.h"
 #include <filesystem>
 #include <vector>
+#include <opencv2/core/version.hpp>
 using namespace aruconavi;
 namespace fs = std::filesystem;
 using namespace std;
@@ -41,12 +42,12 @@ int main() {
   //  cv::imshow("detected coordinate system", image_copy);
   //  cv::waitKey(0);
   //  cv::destroyAllWindows();
-  bool status = rs_with_cv_capture(1280, 720);
-  if (status) {
-    cout << "launch succeed!" << endl;
-  } else {
-    cout << "launch failed!" << endl;
-  }
-  // std::cout << "OpenCV version: " << CV_VERSION << std::endl;
+//  bool status = rs_with_cv_capture(1280, 720);
+//  if (status) {
+//    cout << "launch succeed!" << endl;
+//  } else {
+//    cout << "launch failed!" << endl;
+//  }
+   std::cout << "OpenCV version: " << CV_VERSION << std::endl;
   return 0;
 }

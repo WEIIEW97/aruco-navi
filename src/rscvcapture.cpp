@@ -31,7 +31,8 @@ namespace aruconavi {
       Mat image_out;
       while (waitKey(1) < 0 &&
              getWindowProperty(win_name, WND_PROP_AUTOSIZE) >= 0) {
-        rs2::frameset data = pipe.wait_for_frames(); // wait for next set of frames from the camera
+        rs2::frameset data = pipe.wait_for_frames(); // wait for next set of
+                                                     // frames from the camera
         auto rgb = data.get_color_frame();
 
         // query frame size (width and height)
@@ -61,4 +62,4 @@ namespace aruconavi {
       return false;
     }
   }
-}
+} // namespace aruconavi

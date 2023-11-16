@@ -36,9 +36,10 @@ namespace aruconavi {
                                 const Eigen::Vector<float, 5>& dist_coef,
                                 const cv::Vec3d& rvec, const cv::Vec3d& tvec);
     void draw_detected_markers(
-        const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
-            pairs);
-    void print_message(const Eigen::Vector3f& ypr, const Eigen::Vector3f& translation);
+        const std::pair<std::vector<int>,
+                        std::vector<std::vector<cv::Point2f>>>& pairs);
+    void print_message(const Eigen::Vector3f& ypr,
+                       const Eigen::Vector3f& translation);
     //    void draw_text();
     ~Painter() = default;
   };

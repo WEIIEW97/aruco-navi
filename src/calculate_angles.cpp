@@ -74,10 +74,14 @@ namespace aruconavi {
     int status = -1;
     status = detect_left_right_departure(id);
     if (status == 3) {
-      std::cout << RED << "WARNING: " << "you are left drifted, please make a right turn!" << std::endl;
+      std::cout << RED << "WARNING: "
+                << "you are left drifted, please make a right turn!"
+                << std::endl;
     }
     if (status == 4) {
-      std::cout << RED << "WARNING: " << "you are right drifted, please make a left turn!" << std::endl;
+      std::cout << RED << "WARNING: "
+                << "you are right drifted, please make a left turn!"
+                << std::endl;
     }
   }
 } // namespace aruconavi

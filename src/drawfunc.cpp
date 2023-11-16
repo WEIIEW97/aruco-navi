@@ -40,15 +40,18 @@ namespace aruconavi {
     }
   }
 
-  void Painter::print_message(const Eigen::Vector3f& ypr, const Eigen::Vector3f& translation) {
-    std::cout << "rotation angles are: " << "\n" <<
-        "yaw: " << ypr(0) << "\n" <<
-        "pitch: " << ypr(1) << "\n" <<
-        "roll: " << ypr(2) << std::endl;
-    std::cout << "translation offset is(in meters): " << "\n" <<
-        "x axis: " << translation(0) << "\n" <<
-        "y axis: " << translation(1) << "\n" <<
-        "z axis: " << translation(2) << std::endl;
+  void Painter::print_message(const Eigen::Vector3f& ypr,
+                              const Eigen::Vector3f& translation) {
+    std::cout << "rotation angles are: "
+              << "\n"
+              << "yaw: " << ypr(0) << "\n"
+              << "pitch: " << ypr(1) << "\n"
+              << "roll: " << ypr(2) << std::endl;
+    std::cout << "translation offset is(in meters): "
+              << "\n"
+              << "x axis: " << translation(0) << "\n"
+              << "y axis: " << translation(1) << "\n"
+              << "z axis: " << translation(2) << std::endl;
     std::cout << "===============================" << std::endl;
   }
 
