@@ -21,5 +21,6 @@
 
 namespace aruconavi {
   Eigen::Vector3f R2ypr(const Eigen::Matrix3f& R);
-}
+  Eigen::Matrix3f ypr2R(const Eigen::Vector3f& ypr);
+} // namespace aruconavi
 #endif // BLIND_ASSIST_MATHUTIL_H

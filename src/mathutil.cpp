@@ -35,4 +35,16 @@ namespace aruconavi {
 
     return ypr / M_PI * 180.0;
   }
+
+  Eigen::Matrix3f ypr2R(const Eigen::Vector3f& ypr) {
+    auto y = ypr(0) / 180.0 * M_PI;
+    auto p = ypr(1) / 180.0 * M_PI;
+    auto r = ypr(2) / 180.0 * M_PI;
+
+    Eigen::Matrix3f Rz, Ry, Rx;
+    Rz << cos(y), -sin(y), 0, sin(y), cos(y), 0, 0, 0, 1;
+    Ry << cos(p), 0., sin(p), 0., 1., 0., -sin(p), 0., cos(p);
+    Rx << 1., 0., 0., 0., cos(r), -sin(r), 0., sin(r), cos(r);
+    return Rz * Ry * Rx;
+  }
 } // namespace aruconavi
