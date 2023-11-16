@@ -18,7 +18,7 @@
 
 namespace aruconavi {
   std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
-#if defined(_WIN32) || defined(_WIN64)
+#if CV_MAJOR_VERSION == 4 && CV_MINOR_VERSION >= 8
   detect_markers(cv::Mat& image,
                  cv::aruco::PredefinedDictionaryType aruco_dict_info) {
 #else
@@ -27,7 +27,7 @@ namespace aruconavi {
 #endif
     cv::Mat gray;
     cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
-#if defined(_WIN32) || defined(_WIN64)
+#if CV_MAJOR_VERSION == 4 && CV_MINOR_VERSION >= 8
     auto aruco_info = cv::aruco::getPredefinedDictionary(aruco_dict_info);
     cv::Ptr<cv::aruco::Dictionary> aruco_info_ptr =
         cv::makePtr<cv::aruco::Dictionary>(aruco_info);
@@ -37,7 +37,7 @@ namespace aruconavi {
     std::vector<int> ids;
     std::vector<std::vector<cv::Point2f>> corners;
 
-#if defined(_WIN32) || defined(_WIN64)
+#if CV_MAJOR_VERSION == 4 && CV_MINOR_VERSION >= 8
     cv::aruco::detectMarkers(gray, aruco_info_ptr, corners, ids);
 #else
     cv::aruco::detectMarkers(gray, aruco_info, corners, ids);

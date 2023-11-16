@@ -21,12 +21,13 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 #include <opencv2/aruco.hpp>
+#include <opencv2/core/version.hpp>
 #include "mathutil.h"
 #include "constant.h"
 
 namespace aruconavi {
   std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>
-#if defined(_WIN32) || defined(_WIN64)
+#if CV_MAJOR_VERSION == 4 && CV_MINOR_VERSION >= 8
   detect_markers(cv::Mat& image,
                  cv::aruco::PredefinedDictionaryType aruco_dict_info);
 #else

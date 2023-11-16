@@ -17,7 +17,8 @@
 #ifndef BLIND_ASSIST_CONSTANT_H
 #define BLIND_ASSIST_CONSTANT_H
 #include <Eigen/Dense>
-#if defined(_WIN32) || defined(_WIN64)
+#include <opencv2/core/version.hpp>
+#if CV_MAJOR_VERSION == 4 && CV_MINOR_VERSION >= 8
 #include <opencv2/objdetect/aruco_dictionary.hpp>
 #else
 #include <opencv2/aruco/dictionary.hpp>
@@ -34,7 +35,7 @@ namespace aruconavi {
 
   static Eigen::Vector<float, 5> DISTORTION = {0, 0, 0, 0, 0};
 
-#if defined(_WIN32) || defined(_WIN64)
+#if CV_MAJOR_VERSION == 4 && CV_MINOR_VERSION >= 8
   const cv::aruco::PredefinedDictionaryType ArucoDict = cv::aruco::DICT_6X6_250;
 #else
   const cv::aruco::PREDEFINED_DICTIONARY_NAME ArucoDict =
