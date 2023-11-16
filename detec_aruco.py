@@ -1,8 +1,6 @@
 import cv2
 import numpy as np
-from generate_aruco_marker import aruco_marker_dict 
-
-
+from generate_aruco_marker import aruco_marker_dict
 
 
 def detect_markers(image, aruco_dict_info, make_pair=True):
@@ -89,7 +87,7 @@ if __name__ == "__main__":
     cy = 249.345
     camera_matrix = np.array([[fx, 0, cx], [0, fy, cy], [0, 0, 1]])
     dist_coef = np.zeros(5)
-    
+
     print("================ left ================")
     pairs = detect_markers(left_image, dict_choose)
     corner = find_min_id_corners(pairs)
@@ -103,6 +101,3 @@ if __name__ == "__main__":
     ypr, trans = get_ypr_and_translation(corner, 0.176, camera_matrix, dist_coef)
     print(ypr)
     print(trans)
-
-
-
