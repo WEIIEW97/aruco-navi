@@ -24,14 +24,15 @@
 #include <opencv2/aruco/dictionary.hpp>
 #endif
 namespace aruconavi {
-  struct IntelRealsenseIntrinsics640_480 {
+  // for intel realsense 640x480
+  struct Intrinsic {
     float fx = 610.117;
     float fy = 608.71;
     float cx = 316.156;
     float cy = 249.345;
   };
 
-  static IntelRealsenseIntrinsics640_480 INTRINSICS640480;
+  static Intrinsic INTRINSICS640480;
 
   static Eigen::Vector<float, 5> DISTORTION = {0, 0, 0, 0, 0};
 

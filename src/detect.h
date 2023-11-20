@@ -42,7 +42,7 @@ namespace aruconavi {
       const std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>>&
           pairs);
   int detect_left_right_departure(int id);
-  Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params);
+  Eigen::Matrix3f build_intrinsic(Intrinsic& params);
   std::vector<cv::Point2f> aruco_center_localization(
       const std::vector<std::vector<cv::Point2f>>& corners);
 } // namespace aruconavi

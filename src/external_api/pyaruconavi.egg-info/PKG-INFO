@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: pyaruconavi
+Version: 0.0.1
+Summary: aruco navigation system main python api bindings
+Author: William Wei
+Author-email: williamwei9707@gmail.com

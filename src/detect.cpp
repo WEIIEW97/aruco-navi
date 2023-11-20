@@ -99,7 +99,7 @@ namespace aruconavi {
     }
   }
 
-  Eigen::Matrix3f build_intrinsic(IntelRealsenseIntrinsics640_480& params) {
+  Eigen::Matrix3f build_intrinsic(Intrinsic& params) {
     Eigen::Matrix3f intrinsic;
     intrinsic << params.fx, 0.f, params.cx, 0.f, params.fy, params.cy, 0.f, 0.f,
         1;

@@ -17,27 +17,24 @@
 #ifndef BLIND_ASSIST_CALCULATE_ANGLES_H
 #define BLIND_ASSIST_CALCULATE_ANGLES_H
 #include <utility>
-
 #include "detect.h"
 
 namespace aruconavi {
   class Calc {
   public:
-    IntelRealsenseIntrinsics640_480 intrinsic_;
     Eigen::Vector3f ypr, trans_cam2world;
     Eigen::Matrix3f camera_matrix_;
     Eigen::Vector<float, 5> dist_coef_;
     std::vector<cv::Vec3d> rvecs_, tvecs_;
     cv::Vec3d rvec_, tvec_;
-    bool draw_ready_;
+    bool draw_ready_ = false;
     std::pair<std::vector<int>, std::vector<std::vector<cv::Point2f>>> pairs_;
 
   public:
-    Calc(IntelRealsenseIntrinsics640_480 intrinsic,
+    Calc(Intrinsic intrinsic,
          Eigen::Vector<float, 5> dist_coef) {
       camera_matrix_ = build_intrinsic(intrinsic);
       dist_coef_ = std::move(dist_coef);
-      intrinsic_ = intrinsic;
     }
 
     void process(cv::Mat& image);
