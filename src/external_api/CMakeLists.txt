@@ -9,7 +9,15 @@ MESSAGE(" *** OpenCV_LIB_DIRS : " ${OpenCV_LIB_DIRS})
 MESSAGE(" *** OpenCV_LIBS : " ${OpenCV_LIBS})
 
 # specify your pybind11 location
-set(pybind11_DIR "/home/william/anaconda3/lib/python3.11/site-packages/pybind11/share/cmake/pybind11")
+# set(pybind11_DIR "/home/william/anaconda3/lib/python3.11/site-packages/pybind11/share/cmake/pybind11")
+execute_process(
+        COMMAND python ${CMAKE_CURRENT_LIST_DIR}/get_pybind11_cmake.py
+        OUTPUT_VARIABLE PYTHON_OUTPUT
+)
+message(STATUS "pybind11 cmake dir is ${PYTHON_OUTPUT}")
+string(STRIP ${PYTHON_OUTPUT} PYTHON_OUTPUT)
+set(pybind11_DIR ${PYTHON_OUTPUT})
+message(STATUS "pybind11_DIR ${pybind11_DIR}")
 find_package(pybind11 CONFIG REQUIRED)
 MESSAGE(" *** PYTHON_INCLUDE_DIRS : " ${PYTHON_INCLUDE_DIRS})
 MESSAGE(" *** PYTHON_LIBRARIES : " ${PYTHON_LIBRARIES})
@@ -23,9 +31,6 @@ if (NOT ${NUMPY_INCLUDE_DIR} STREQUAL "")
     include_directories(${NUMPY_INCLUDE_DIR})
 endif ()
 
-
-#**************************************************************************************************
-# Include **************************************************************************************************
 include_directories(${pybind11_INCLUDE_DIR})
 include_directories(${PYTHON_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -33,28 +38,19 @@ include_directories(${OpenCV_INCLUDE_DIRS}/opencv4)
 include_directories(${EIGEN3_INCLUDE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-#**************************************************************************************************
-# Set variable **************************************************************************************************
 SET(SOURCES
         ${CMAKE_CURRENT_SOURCE_DIR}/export_apis.cpp
 )
 
-#**************************************************************************************************
-# Set compiler **************************************************************************************************
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     add_compile_options(/std:c++17 /Oy /utf-8)
 else ()
     add_compile_options(-std=c++17 -fPIC -O3)
 endif ()
 
-#**************************************************************************************************
-# Linker **************************************************************************************************
 LINK_DIRECTORIES(
         ${OpenCV_LIB_DIR}
 )
 
-#**************************************************************************************************
-# Make configuration
-#**************************************************************************************************
 pybind11_add_module(pyaruconavi MODULE ${SOURCES})
 target_link_libraries(pyaruconavi PRIVATE ${OpenCV_LIBS})
