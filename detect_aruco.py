@@ -7,14 +7,17 @@ def detect_markers(image, aruco_dict_info, make_pair=True):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     _aruco_info = cv2.aruco.getPredefinedDictionary(aruco_dict_info)
     parameters = cv2.aruco.DetectorParameters()
+    # for new apis
+    detector = cv2.aruco.ArucoDetector(_aruco_info, parameters)
 
-    corners, ids, rejected_img_points = cv2.aruco.detectMarkers(
-        gray, _aruco_info, parameters=parameters
-    )
-    if not make_pair:
-        return corners, ids, rejected_img_points
+    corners, ids, rejected_img_points = detector.detectMarkers(gray)
+    if ids is None:
+        return None
     else:
-        return list(zip(ids, corners))
+        if not make_pair:
+            return corners, ids, rejected_img_points
+        else:
+            return list(zip(ids, corners))
 
 
 def find_min_id_corners(pairs):
@@ -54,22 +57,51 @@ def build_intrinsic(intrinsic_param):
     return np.array([[fx, 0, cx], [0, fy, cy], [0, 0, 1]])
 
 
+def estimate_single_markers(corners, marker_len, cam_matrix, dist_coeffs):
+    marker_points = np.array(
+        [
+            [-marker_len / 2, marker_len / 2, 0],
+            [marker_len / 2, marker_len / 2, 0],
+            [marker_len / 2, -marker_len / 2, 0],
+            [-marker_len / 2, -marker_len / 2, 0],
+        ],
+        dtype=np.float32,
+    )
+
+    _, rvec, tvec = cv2.solvePnP(marker_points, corners, cam_matrix, dist_coeffs)
+    return rvec, tvec
+
+
 def get_ypr_and_translation(
     corner, marker_len, intrinsic_matrix, dist_coef=np.zeros(5)
 ):
-    rvec, tvec, _ = cv2.aruco.estimatePoseSingleMarkers(
+    # opencv 4.8.0 has deleted `cv2.aruco.estimatePoseSingleMarkers`
+    # rvec, tvec, _ = cv2.aruco.estimatePoseSingleMarkers(
+    #     corners=corner,
+    #     markerLength=marker_len,
+    #     cameraMatrix=intrinsic_matrix,
+    #     distCoeffs=dist_coef,
+    # )
+    rvec, tvec = estimate_single_markers(
         corners=corner,
-        markerLength=marker_len,
-        cameraMatrix=intrinsic_matrix,
-        distCoeffs=dist_coef,
+        marker_len=marker_len,
+        cam_matrix=intrinsic_matrix,
+        dist_coeffs=dist_coef,
     )
     # convert rvec to rotation matrix
     rotvec, _ = cv2.Rodrigues(rvec)
     # inverse the world2cam to cam2world
     rot_cam2world = np.transpose(rotvec)
-    trans_cam2world = -rot_cam2world @ tvec[0].T
+    trans_cam2world = -rot_cam2world @ tvec
     ypr = R2ypr(rot_cam2world)
     return ypr, trans_cam2world
+
+
+def process(image, dict_choose, marker_len, camera_matrix, dist_coef):
+    pairs = detect_markers(image, dict_choose)
+    corners = find_min_id_corners(pairs)
+    ypr, trans = get_ypr_and_translation(corners, marker_len, camera_matrix, dist_coef)
+    return ypr, trans
 
 
 if __name__ == "__main__":
@@ -101,3 +133,14 @@ if __name__ == "__main__":
     ypr, trans = get_ypr_and_translation(corner, 0.176, camera_matrix, dist_coef)
     print(ypr)
     print(trans)
+    
+    rootdir = "aruco_capture"
+    dict_choose = aruco_marker_dict["DICT_6X6_250"]
+    accept_names = []
+    for i in range(100, 201):
+        name = "frame_{:04d}.png".format(i)
+        pairs = detect_markers(cv2.imread(f"{rootdir}/{name}"), dict_choose)
+        if pairs is not None:
+            accept_names.append(name)
+
+    print(accept_names)

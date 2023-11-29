@@ -13,6 +13,11 @@ find_package(realsense2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
+# let cmake find OpenGL in GLVND preference
+if (POLICY CMP0072)
+    cmake_policy (SET CMP0072 NEW)
+endif(POLICY CMP0072)
+
 
 add_executable(${PROJECT_NAME} 
         main.cpp

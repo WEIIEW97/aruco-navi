@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.5.1)
 
 project(pyaruconavi)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
 MESSAGE(" *** OpenCV_INCLUDE_DIRS : " ${OpenCV_INCLUDE_DIRS})
@@ -11,6 +13,7 @@ MESSAGE(" *** OpenCV_LIBS : " ${OpenCV_LIBS})
 # specify your pybind11 location
 # set(pybind11_DIR "/home/william/anaconda3/lib/python3.11/site-packages/pybind11/share/cmake/pybind11")
 execute_process(
+        COMMAND conda activate base
         COMMAND python ${CMAKE_CURRENT_LIST_DIR}/get_pybind11_cmake.py
         OUTPUT_VARIABLE PYTHON_OUTPUT
 )

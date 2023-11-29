@@ -26,9 +26,6 @@
 #include <Eigen/Core>
 #include <Eigen/Dense>
 #include <cmath>
-// #include "../detect.h"
-// #include "../mathutil.h"
-// #include "../constant.h"
 
 struct Intrinsic {
   float fx = 610.117;

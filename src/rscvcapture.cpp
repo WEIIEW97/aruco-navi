@@ -16,12 +16,55 @@
 #include "rscvcapture.h"
 #include "calculate_angles.h"
 #include "drawfunc.h"
+// #include "kinematics.h"
+// #include "mathtypes.h"
 
 namespace aruconavi {
+  //  using float3 = vec3<float>;
+
   bool rs_with_cv_capture(int win_width, int win_height) {
     try {
+      //      if (!check_imu_is_supported()) {
+      //        std::cerr << "Device supporting IMU not found" << std::endl;
+      //        return false;
+      //      }
+
       rs2::pipeline pipe;
       pipe.start();
+      //      rs2::config cfg;
+      //      cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
+      //      cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
+      //      RotationEstimator algo;
+      //      auto profile = pipe.start(cfg, [&](const rs2::frame& frame) {
+      //        // Cast the frame that arrived to motion frame
+      //        auto motion = frame.as<rs2::motion_frame>();
+      //        // If casting succeeded and the arrived frame is from gyro
+      //        stream if (motion && motion.get_profile().stream_type() ==
+      //        RS2_STREAM_GYRO &&
+      //            motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F) {
+      //          // Get the timestamp of the current frame
+      //          double ts = motion.get_timestamp();
+      //          // Get gyro measures
+      //          rs2_vector gyro_data = motion.get_motion_data();
+      //          // Call function that computes the angle of motion based on
+      //          the
+      //          // retrieved measures
+      //          algo.process_gyro(gyro_data, ts);
+      //        }
+      //        // If casting succeeded and the arrived frame is from
+      //        accelerometer
+      //        // stream
+      //        if (motion && motion.get_profile().stream_type() ==
+      //        RS2_STREAM_ACCEL &&
+      //            motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F) {
+      //          // Get accelerometer measures
+      //          rs2_vector accel_data = motion.get_motion_data();
+      //          // Call function that computes the angle of motion based on
+      //          the
+      //          // retrieved measures
+      //          algo.process_accel(accel_data);
+      //        }
+      //      });
 
       using namespace cv;
       const auto win_name = "display image";
